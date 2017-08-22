@@ -7,7 +7,7 @@ public class ColliderController : MonoBehaviour
     SteamVR_TrackedObject trackedObject;
     RaycastHit raycastHit;
     [SerializeField]
-    GameObject[] pointColliders;
+    GameObject[] points;
 
     // Use this for initialization
     void Start()
@@ -31,7 +31,7 @@ public class ColliderController : MonoBehaviour
             var rayTransf = raycastHit.transform;
             if (rayTransf != null)
             {
-                if (rayTransf.name == "PointCollider")
+                if (rayTransf.tag == "PointCollider")
                 {
                     SetPointColliderDisEnable(rayTransf.gameObject);
                 }
@@ -39,19 +39,22 @@ public class ColliderController : MonoBehaviour
         }
     }
 
-    void SetPointColliderDisEnable(GameObject colliderGo)
+    void SetPointColliderDisEnable(GameObject collider)
     {
-        for (int i = 0; i < pointColliders.Length; i++)
+        for (int i = 0; i < points.Length; i++)
         {
-            var parentGo = pointColliders[i].transform.parent.gameObject;
-            if (pointColliders[i] == colliderGo)
-            {
-                parentGo.SetActive(false);
-            }
-            else
-            {
-                parentGo.SetActive(true);
-            }
+            points[i].SetActive(true);
         }
+
+        GameObject point;
+        if (collider.name == "PointCollider")
+        {
+            point = collider.transform.parent.gameObject;
+        }
+        else
+        {
+            point = collider.transform.Find("Point").gameObject;
+        }
+        point.SetActive(false);
     }
 }
