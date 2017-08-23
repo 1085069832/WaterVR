@@ -43,7 +43,10 @@ public class ColliderController : MonoBehaviour
     {
         for (int i = 0; i < points.Length; i++)
         {
-            points[i].SetActive(true);
+            if (!points[i].activeSelf)
+            {
+                points[i].SetActive(true); break;
+            }
         }
 
         GameObject point;
