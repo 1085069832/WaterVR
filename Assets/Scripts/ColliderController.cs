@@ -9,6 +9,8 @@ public class ColliderController : MonoBehaviour
     [SerializeField]
     GameObject[] points;
     [SerializeField] BoatController boatController;
+    bool startTimer;
+    float timer;
 
     // Use this for initialization
     void Start()
@@ -45,12 +47,25 @@ public class ColliderController : MonoBehaviour
                         boatPointManager = rayTransf.GetComponentInParent<BoatPointManager>();
                     }
 
-                    //移动游艇
+                    //2s后移动游艇
                     if (boatPointManager.isBoatPoint)
                     {
-                        boatController.startMove = true;
+                        startTimer = true;
+                        boatController.doFollow = true;
                     }
                 }
+            }
+        }
+
+        if (startTimer)
+        {
+            timer += Time.deltaTime;
+            if (timer > 2)
+            {
+                boatController.ShowBoatTail();
+                boatController.startMove = true;
+                startTimer = false;
+                timer = 0;
             }
         }
     }

@@ -9,6 +9,8 @@ public class BoatController : MonoBehaviour
     [SerializeField] Transform targetTransf;
     public bool startMove;
     [SerializeField] CameraFollow cameraFollow;
+    [SerializeField] GameObject[] tails;
+    [HideInInspector] public bool doFollow;
 
     private void Awake()
     {
@@ -18,6 +20,11 @@ public class BoatController : MonoBehaviour
 
     private void Update()
     {
+        if (doFollow)
+        {
+            cameraFollow.DoFollow();
+        }
+
         if (startMove && cameraFollow)
         {
             var dis = Vector3.Distance(transform.position, targetTransf.position);
@@ -32,8 +39,15 @@ public class BoatController : MonoBehaviour
                     }
                 }
                 transform.Translate(Vector3.forward * boatFwdSpeed * Time.deltaTime, Space.Self);
-                cameraFollow.DoFollow();
             }
+        }
+    }
+
+    public void ShowBoatTail()
+    {
+        for (int i = 0; i < tails.Length; i++)
+        {
+            tails[i].SetActive(true);
         }
     }
 }
