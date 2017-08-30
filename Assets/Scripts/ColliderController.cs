@@ -8,6 +8,7 @@ public class ColliderController : MonoBehaviour
     RaycastHit raycastHit;
     [SerializeField]
     GameObject[] points;
+    [SerializeField] BoatController boatController;
 
     // Use this for initialization
     void Start()
@@ -34,6 +35,21 @@ public class ColliderController : MonoBehaviour
                 if (rayTransf.tag == "PointCollider")
                 {
                     SetPointColliderDisEnable(rayTransf.gameObject);
+                    BoatPointManager boatPointManager;
+                    if (rayTransf.GetComponent<BoatPointManager>())
+                    {
+                        boatPointManager = rayTransf.GetComponent<BoatPointManager>();
+                    }
+                    else
+                    {
+                        boatPointManager = rayTransf.GetComponentInParent<BoatPointManager>();
+                    }
+
+                    //移动游艇
+                    if (boatPointManager.isBoatPoint)
+                    {
+                        boatController.startMove = true;
+                    }
                 }
             }
         }
