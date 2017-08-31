@@ -5,4 +5,5 @@ using UnityEngine;
 public class BoatPointManager : MonoBehaviour
 {
     public bool isBoatPoint;
+    public bool isStartPoint;
 }

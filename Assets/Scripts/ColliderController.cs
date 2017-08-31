@@ -51,7 +51,11 @@ public class ColliderController : MonoBehaviour
                     if (boatPointManager.isBoatPoint)
                     {
                         startTimer = true;
-                        boatController.doFollow = true;
+                        boatController.cameraFollow.DoFollow();
+                    }
+                    else if (boatPointManager.isStartPoint)
+                    {
+                        SetPointParentEnable();
                     }
                 }
             }
@@ -62,7 +66,7 @@ public class ColliderController : MonoBehaviour
             timer += Time.deltaTime;
             if (timer > 2)
             {
-                boatController.ShowBoatTail();
+                boatController.ShowBoatTail(true);
                 boatController.startMove = true;
                 startTimer = false;
                 timer = 0;
@@ -90,5 +94,13 @@ public class ColliderController : MonoBehaviour
             point = collider.transform.Find("Point").gameObject;
         }
         point.SetActive(false);
+    }
+
+    void SetPointParentEnable()
+    {
+        for (int i = 0; i < points.Length; i++)
+        {
+            points[i].transform.parent.gameObject.SetActive(true);
+        }
     }
 }

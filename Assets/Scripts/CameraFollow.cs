@@ -8,6 +8,6 @@ public class CameraFollow : MonoBehaviour
 
     public void DoFollow()
     {
-        transform.position = boat.position;
+        transform.parent = boat;
     }
 }
